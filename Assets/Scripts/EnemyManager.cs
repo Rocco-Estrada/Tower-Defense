@@ -84,6 +84,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
     
+    // Enemies have 100 health and each click causes 25 damage. 
     private void ClickToDestroy()
     {
         if (Input.GetMouseButtonDown(0))
@@ -92,11 +93,10 @@ public class EnemyManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                //BoxCollider bc = hit.collider as BoxCollider;
                 if (hit.collider.gameObject.transform.parent.gameObject.tag == "Enemy")
                 {
                     hit.collider.gameObject.transform.parent.gameObject.GetComponent<Enemy>().health -= 25;
-                    print(hit.collider.gameObject.transform.parent.gameObject.GetComponent<Enemy>().health);
+                    //print(hit.collider.gameObject.transform.parent.gameObject.GetComponent<Enemy>().health);
                 }
             }
         }

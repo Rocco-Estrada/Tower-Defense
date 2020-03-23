@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Destroy(this.gameObject);
+            Purse.instance.coins += 100;
         }
     }
 }
