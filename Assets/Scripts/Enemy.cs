@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
   private int currentIndexWaypoint = 0;
   public float speed = 1;
 
+  public int health = 100;
+
   public void Initialize(WaypointManager waypointManager)
   {
     this.waypointManager = waypointManager;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
     }
 
     transform.Translate(direction.normalized * speed * Time.deltaTime);
+    CheckHealth();
   }
 
   private void GetNextWaypoint()
@@ -33,4 +36,12 @@ public class Enemy : MonoBehaviour
     currentDestination = waypointManager.GetNeWaypoint(currentIndexWaypoint);
     currentIndexWaypoint++;
   }
+
+  public void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

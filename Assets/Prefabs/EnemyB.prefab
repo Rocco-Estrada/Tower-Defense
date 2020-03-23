@@ -103,7 +103,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8262523722266808648}
   - component: {fileID: 8262523722266808651}
-  - component: {fileID: -158546878436768525}
   m_Layer: 0
   m_Name: EnemyB
   m_TagString: Enemy
@@ -141,16 +140,4 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   waypointManager: {fileID: 0}
   speed: 2.5
---- !u!65 &-158546878436768525
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8262523722266808650}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  health: 100
