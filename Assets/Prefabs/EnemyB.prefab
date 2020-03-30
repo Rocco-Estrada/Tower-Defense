@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 8262523722266808651}
   m_Layer: 0
   m_Name: EnemyB
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,4 +140,3 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   waypointManager: {fileID: 0}
   speed: 2.5
-  health: 100

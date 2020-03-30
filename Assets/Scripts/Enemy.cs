@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, iMovement
 {
   public Waypoint currentDestination;
   public WaypointManager waypointManager;
   private int currentIndexWaypoint = 0;
   public float speed = 1;
-
-  public int health = 100;
 
   public void Initialize(WaypointManager waypointManager)
   {
@@ -28,7 +26,6 @@ public class Enemy : MonoBehaviour
     }
 
     transform.Translate(direction.normalized * speed * Time.deltaTime);
-    CheckHealth();
   }
 
   private void GetNextWaypoint()
@@ -36,13 +33,4 @@ public class Enemy : MonoBehaviour
     currentDestination = waypointManager.GetNeWaypoint(currentIndexWaypoint);
     currentIndexWaypoint++;
   }
-
-  public void CheckHealth()
-    {
-        if (health <= 0)
-        {
-            Destroy(this.gameObject);
-            Purse.instance.coins += 100;
-        }
-    }
 }

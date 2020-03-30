@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,74 +31,50 @@ public struct Wave
 
 public class EnemyManager : MonoBehaviour
 {
-    public GameObject EnemyA;
-    public GameObject EnemyB;
-    public float timeToWaitA = 1;
-    public float timeToWaitB = 1.5f;
-    public Wave currentWave;
+  public GameObject EnemyA;
+  public GameObject EnemyB;
+  public float timeToWaitA = 1;
+  public float timeToWaitB = 1.5f;
+  public Wave currentWave;
 
-    public WaypointManager waypointManager;
+  public WaypointManager waypointManager;
 
-    void Start()
+  void Start()
+  {
+
+    Group groupA = new Group(EnemyA, 1f, 5);
+    Group groupB = new Group(EnemyB, timeToWaitB, 3);
+
+    Group[] groups = new Group[2]{groupA, groupB};
+    currentWave = new Wave(new Group[2] { groupA, groupB });
+
+    SpawnWave(currentWave);
+  }
+
+  private void SpawnWave(Wave newWave)
+  {
+    foreach (Group group in newWave.enemyGroups)
     {
-
-        Group groupA = new Group(EnemyA, 1f, 5);
-        Group groupB = new Group(EnemyB, timeToWaitB, 3);
-
-        Group[] groups = new Group[2] { groupA, groupB };
-        currentWave = new Wave(new Group[2] { groupA, groupB });
-
-        SpawnWave(currentWave);
+      StartCoroutine(SpawnGroup(group));
     }
+  }
 
-    void Update()
+  //private IEnumerator SpawnWave(Wave newWave)
+  //{
+  //  while (true)
+  //  {
+  //    yield return (1);
+  //  }
+  //}
+
+  private IEnumerator SpawnGroup(Group @group)
+  {
+    while (@group.numberOfEnemies > 0)
     {
-        ClickToDestroy();
+      yield return new WaitForSeconds(@group.spawnTime);
+      GameObject enemy = Instantiate(@group.enemy);
+      enemy.GetComponent<iMovement>().Initialize(waypointManager);
+      @group.numberOfEnemies--;
     }
-
-    private void SpawnWave(Wave newWave)
-    {
-        foreach (Group group in newWave.enemyGroups)
-        {
-            StartCoroutine(SpawnGroup(group));
-        }
-    }
-
-    //private IEnumerator SpawnWave(Wave newWave)
-    //{
-    //  while (true)
-    //  {
-    //    yield return (1);
-    //  }
-    //}
-
-    private IEnumerator SpawnGroup(Group @group)
-    {
-        while (@group.numberOfEnemies > 0)
-        {
-            yield return new WaitForSeconds(@group.spawnTime);
-            GameObject enemy = Instantiate(@group.enemy);
-            enemy.GetComponent<Enemy>().Initialize(waypointManager);
-            @group.numberOfEnemies--;
-        }
-    }
-    
-    // Enemies have 100 health and each click causes 25 damage. 
-    private void ClickToDestroy()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject.transform.parent.gameObject.tag == "Enemy")
-                {
-                    hit.collider.gameObject.transform.parent.gameObject.GetComponent<Enemy>().health -= 25;
-                    //print(hit.collider.gameObject.transform.parent.gameObject.GetComponent<Enemy>().health);
-                }
-            }
-        }
-    }
-
+  }
 }
